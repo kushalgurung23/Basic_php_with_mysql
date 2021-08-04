@@ -9,6 +9,13 @@ Here we aren't using constant because they are set in initialize.php which we ha
 
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
 <div id="content">
+  <div id = "main-menu">
+    <h2>Main menu</h2>
+    <ul>
+    <!-- We aren't using absolute path, we are using relative path so we aren't putting / at beginning -->
+      <li><a href="<?php echo url_for('/staff/subjects/index.php');?>   ">Subjects</a></li>
+    </ul>
+  </div>
 
 </div>
 <?php include(SHARED_PATH . '/staff_footer.php'); ?>
