@@ -10,7 +10,8 @@ $id = $_GET['id'] ?? 'No id number';
 // latter executes
 $id = isset($_GET['id']) ? $_GET['id'] : 'No id number';
 
-echo $id;
+//htmlspecialchars
+echo hsc($id);
 
 ?>
 
