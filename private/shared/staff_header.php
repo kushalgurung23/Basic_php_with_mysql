@@ -5,7 +5,7 @@ if(!isset($page_title)) {$page_title = 'Staff Area';}
 
 <html lang="en">
   <head>
-    <title>KGB - <?php echo $page_title;?> </title>
+    <title>KGB - <?php echo hsc($page_title);?> </title>
     <meta charset="utf-8">
     <!-- working with url -->
     <link rel="stylesheet" media="all" href= "<?php echo url_for('/stylesheets/staff.css'); ?>"/>

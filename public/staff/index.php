@@ -14,6 +14,9 @@ Here we aren't using constant because they are set in initialize.php which we ha
     <ul>
     <!-- We aren't using absolute path, we are using relative path so we aren't putting / at beginning -->
       <li><a href="<?php echo url_for('/staff/subjects/index.php');?>   ">Subjects</a></li>
+      <li>
+        <a href="<?php echo url_for('/staff/pages/index.php');?>">Pages</a>
+      </li>
     </ul>
   </div>
 
