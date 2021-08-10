@@ -6,9 +6,9 @@
 
 <?php
   $pages = [
-    ['id'=>11, 'name' => 'Staff area'],
-    ['id'=>12, 'name' => 'Subjects'],
-    ['id'=>13, 'name' => 'Pages'],
+    ['id'=>11, 'name' => 'Staff area', 'position' => '1', 'visible' => '0'],
+    ['id'=>12, 'name' => 'Subjects', 'position' => '1', 'visible' => '0'],
+    ['id'=>13, 'name' => 'Subjects', 'position' => '1', 'visible' => '1'],
   ];
 ?>
 
@@ -20,13 +20,17 @@
   <div class="pages listing">
     <h1>Pages</h1>
     <div class="actions">
-      <a class="action" href="">Create new page</a>
+      <a class="action" href="<?php echo url_for('/staff/pages/new.php')?>">Create new page</a>
     </div>
 
     <table class="list">
       <tr>
         <th>ID</th>
-        <th>Page</th>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Visible</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
         <th>&nbsp;</th>
       </tr>
 
@@ -34,7 +38,11 @@
             <tr>
               <td><?php echo hsc($page['id']);?></td>
               <td><?php echo hsc($page['name']);?></td>
+              <td><?php echo hsc($page['position']);?></td>
+              <td><?php echo $page['visible'] == 1 ? 'true' : 'false'; ?></td>
               <td><a class="action" href="<?php echo url_for('/staff/pages/show.php?id=' . hsc(u($page['id'])))?>">View</a></td>
+              <td><a class="action" href="<?php echo url_for('/staff/pages/edit.php?id=' . hsc(u($page['id'])))?>">Edit</a></td>
+              <td><a class="action" href="">Delete</a></td>
             </tr>
           <?php } ?>
 

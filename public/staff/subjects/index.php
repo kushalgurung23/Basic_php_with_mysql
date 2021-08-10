@@ -22,7 +22,7 @@
     <h1>Subjects</h1>
 
     <div class="actions">
-      <a class="action" href="">Create New Subject</a>
+      <a class="action" href="<?php echo url_for('/staff/subjects/new.php');?>">Create New Subject</a>
     </div>
 
   	<table class="list">
@@ -43,7 +43,7 @@
           <td><?php echo $subject['visible'] == 1 ? 'true' : 'false'; ?></td>
     	    <td><?php echo hsc($subject['menu_name']); ?></td>
           <td><a class="action" href="<?php echo url_for('/staff/subjects/show.php?id=' . hsc(u($subject['id']))); ?>">View</a></td>
-          <td><a class="action" href="">Edit</a></td>
+          <td><a class="action" href="<?php echo url_for('/staff/subjects/edit.php?id=' . hsc(u($subject['id'])));?>">Edit</a></td>
           <td><a class="action" href="">Delete</a></td>
     	  </tr>
       <?php } ?>
