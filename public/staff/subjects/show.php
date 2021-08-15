@@ -13,6 +13,8 @@ $id = isset($_GET['id']) ? $_GET['id'] : 'No id number';
 //htmlspecialchars to avoid execution of harmful user inputs like username </div>kushal
 //echo hsc($id);
 
+$subject = find_subject_by_id($id);
+
 ?>
 
 <?php $page_title="Subject View" ?>
@@ -23,15 +25,36 @@ $id = isset($_GET['id']) ? $_GET['id'] : 'No id number';
 
 <div id="content">
   <a class="back-link" href="<?php echo url_for('/staff/subjects/index.php');?>">&laquo; Back</a>
-  <br>
-  <p>subject id: <?php echo hsc($id);?></p>
-<br/>
-  <p>Links to check url parameter</p>
+
+  <div class="subject show">
+
+    <h1>Subject: <?php echo hsc($subject['menu_name']); ?></h1>
+ 
+    <div class="attributes">
+      <dl>
+        <dt>Menu Name</dt>
+        <dd><?php echo hsc($subject['menu_name']); ?></dd>
+      </dl>
+      <dl>
+        <dt>Position</dt>
+        <dd><?php echo hsc($subject['position']); ?></dd>
+      </dl>
+      <dl>
+        <dt>Visible</dt>
+        <dd><?php echo $subject['visible'] == '1' ? 'true' : 'false'; ?></dd>
+      </dl>
+    </div>
+
+  </div>
   <br/>
-<!-- u = urlencode function which is defined in functions.php file -->
-<a href="show.php?name=<?php echo hsc(u('John Doe')); ?>">John Doe</a><br />
-<a href="show.php?company=<?php echo hsc(u('Widgets&More')); ?>">Widgets&More</a><br />
-<a href="show.php?query=<?php echo hsc(u('!#*?')); ?>">!#*?</a><br />
+
+  <div class="check parameters">
+    <h2>Links to check url parameter</h2>
+    <!-- u = urlencode function which is defined in functions.php file -->
+    <a href="show.php?name=<?php echo hsc(u('John Doe')); ?>">John Doe</a><br />
+    <a href="show.php?company=<?php echo hsc(u('Widgets&More')); ?>">Widgets&More</a><br />
+    <a href="show.php?query=<?php echo hsc(u('!#*?')); ?>">!#*?</a><br />
+  </div>
 
 </div>
 
