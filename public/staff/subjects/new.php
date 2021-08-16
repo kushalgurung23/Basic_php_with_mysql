@@ -11,6 +11,15 @@ if($test == '404') {
 }elseif($test == 'redirect') {
   redirect_to(url_for('/staff/subjects/index.php'));
 }
+
+$subject_set = find_all_subjects();
+// New subject will automatically have new position number.
+$subject_count = mysqli_num_rows($subject_set) + 1; 
+mysqli_free_result($subject_set);
+
+$subject = [];
+$subject['position'] = $subject_count;
+
 ?>
 
 <?php $page_title = 'Create Subject'; ?>
@@ -18,7 +27,7 @@ if($test == '404') {
 
 <div id="content">
 
-  <a class="back-link" href="<?php echo url_for('/staff/subjects/index.php'); ?>">&laquo; Back to List</a>
+  <a class="back-link" href="<?php echo url_for('/staff/subjects/index.php'); ?>">&laquo; Back</a>
 
   <div class="subject new">
     <h1>Create Subject</h1>
@@ -32,7 +41,15 @@ if($test == '404') {
         <dt>Position</dt>
         <dd>
           <select name="position">
-            <option value="1">1</option>
+            <?php
+              for($i=1; $i <= $subject_count; $i++) {
+                echo "<option value=\"{$i}\"";
+                if($subject["position"] == $i) {
+                  echo " selected";
+                }
+                echo ">{$i}</option>";
+              }
+            ?>
           </select>
         </dd>
       </dl>

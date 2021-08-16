@@ -33,9 +33,13 @@ if(is_post_request()) {
 else {
   // It will be executed only once when the page is not in post server request method, i.e. in get request method. Once we edit the form, the page will always be in post request.
   $subject = find_subject_by_id($id);
+
+  $subject_set = find_all_subjects();
+  $subject_count = mysqli_num_rows($subject_set); 
+  mysqli_free_result($subject_set);
 }
 
-?>
+?> 
 
 <?php $page_title = 'Edit Subject'; ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
@@ -55,9 +59,17 @@ else {
       <dl>
         <dt>Position</dt>
         <dd>
-          <select name="position">
-            <option value="1" <?php if($subject['position'] == '1') {echo "selected";}?>>1</option>
-          </select>
+        <select name="position">
+          <?php
+            for($i=1; $i <= $subject_count; $i++) {
+              echo "<option value=\"{$i}\"";
+              if($subject["position"] == $i) {
+                echo " selected";
+              }
+              echo ">{$i}</option>";
+            }
+          ?>
+        </select>
         </dd>
       </dl>
       <dl>

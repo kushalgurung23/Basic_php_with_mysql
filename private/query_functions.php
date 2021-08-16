@@ -27,15 +27,16 @@
     return($subject);
   }
 
-  function insert_subject($menu_name, $position, $visible) {
+  // $subject is single array or a whole array
+  function insert_subject($subject) {
 
     global $db;
     $sql = "INSERT INTO subjects ";
     $sql .= "(menu_name, position, visible) ";
     $sql .= "VALUES (";
-    $sql .= "'" . $menu_name . "', ";
-    $sql .="'" . $position . "', ";
-    $sql .="'" . $visible . "');";
+    $sql .= "'" . $subject['menu_name'] . "', ";
+    $sql .="'" . $subject['position'] . "', ";
+    $sql .="'" . $subject['visible'] . "');";
     $result = mysqli_query($db, $sql);
     // For insert, update and delete, $result is true/false
 
@@ -48,7 +49,6 @@
       db_disconnect($db);
     }
   }
-
 
   // $subject is a single array of attribute
   function update_subject($subject) {
@@ -72,6 +72,25 @@
     }
   }
 
+  function delete_subject($id) {
+    global $db;
+
+    $sql = "DELETE FROM subjects ";
+    $sql .= "WHERE id= '" . $id . "' ";
+    $sql .= "LIMIT 1;";
+
+    // We get either true/false
+    $result = mysqli_query($db, $sql);
+    if($result) {
+      return true;
+    }
+    else {
+      mysqli_error($db);
+      db_disconnect($db);
+      exit;
+    }
+  }
+
   function find_all_pages() {
     global $db;
     $query = "SELECT * FROM pages ";
@@ -79,6 +98,39 @@
     $result = mysqli_query($db, $query);
     confirm_result_set($result);
     return $result;
+  }
+
+  function find_page_by_id($id) {
+    global $db;
+    $sql = "SELECT * FROM pages ";
+    $sql .= "WHERE id = '" .$id ."';";
+
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $page = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+    return $page;
+  }
+
+  function insert_page($page) {
+    global $db;
+
+    $sql = "INSERT INTO pages (menu_name, position, visible, content) ";
+    $sql .= "VALUES (";
+    $sql .= "'" . $page['menu_name'] . "', ";
+    $sql .= "'" . $page['position'] . "', ";
+    $sql .= "'" . $page['visible'] . "', ";
+    $sql .= "'" . $page['content'] . "');";
+
+    $result = mysqli_query($db, $sql);
+    if($result) {
+      return true;
+    }
+    else {
+      mysqli_error($db);
+      db_disconnect($db);
+    }
+
   }
 
 ?>
