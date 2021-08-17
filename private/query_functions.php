@@ -91,6 +91,16 @@
     }
   }
 
+  function find_subject_id() {
+    global $db;
+    $sql = "SELECT id FROM subjects;";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    //$all_subject_id = mysqli_fetch_assoc($result);
+    //mysqli_free_result($result);
+    return ($result);
+  }
+
   function find_all_pages() {
     global $db;
     $query = "SELECT * FROM pages ";
@@ -110,6 +120,26 @@
     $page = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
     return $page;
+  }
+
+  function update_page($page) {
+    global $db;
+    $sql = "UPDATE pages SET ";
+    $sql .= "menu_name = '" . $page['menu_name'] . "', "; 
+    $sql .= "position = '" . $page['position'] . "', "; 
+    $sql .= "visible = '" . $page['visible'] . "', "; 
+    $sql .= "content = '" . $page['content'] . "' ";
+    $sql .= "WHERE id = '" . $page['id'] . "';"; 
+
+    $result_set = mysqli_query($db, $sql);
+    if($result_set) {
+      return true;
+    }
+    else {
+      mysqli_error($db);
+      db_disconnect($db);
+      exit;
+    }
   }
 
   function insert_page($page) {

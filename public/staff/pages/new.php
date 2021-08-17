@@ -8,6 +8,12 @@ mysqli_free_result($page_set);
 
 $page = [];
 $page['position'] = $page_count;
+
+$subject_id_set = find_subject_id();
+$subject_id_count = mysqli_num_rows($subject_id_set);
+$all_subject_id = mysqli_fetch_assoc($subject_id_set);
+$keys = array_keys($all_subject_id);
+
 ?>
 
 <?php $page_title = 'Create Page'; ?>
