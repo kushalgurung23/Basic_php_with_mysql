@@ -34,6 +34,7 @@
   	  </tr>
 
       <?php while($subject = mysqli_fetch_assoc($subject_set)) { ?>
+        
         <tr>
           <td><?php echo hsc($subject['id']); ?></td>
           <td><?php echo hsc($subject['position']); ?></td>

@@ -7,6 +7,7 @@ $page_count = mysqli_num_rows($page_set) + 1;
 mysqli_free_result($page_set);
 
 $page = [];
+$page['subject_id'] = '';
 $page['position'] = $page_count;
 
 $subject_id_set = find_subject_id();
@@ -30,6 +31,24 @@ $keys = array_keys($all_subject_id);
       <dl>
         <dt>Menu Name</dt>
         <dd><input type="text" name="menu_name" value="" /></dd>
+      </dl>
+      <dl>
+        <dt>Subject</dt>
+        <dd>
+          <select name="subject_id">
+          <?php
+            $subject_set = find_all_subjects();
+            while($subject = mysqli_fetch_assoc($subject_set)) {
+              echo "<option value=\"" . hsc($subject['id']) . "\"";
+              if($page["subject_id"] == $subject['id']) {
+                echo " selected";
+              }
+              echo ">" . hsc($subject['menu_name']) . "</option>";
+            }
+            mysqli_free_result($subject_set);
+          ?>
+          </select>
+        </dd>
       </dl>
       <dl>
         <dt>Position</dt>
@@ -58,7 +77,9 @@ $keys = array_keys($all_subject_id);
       </dl>
       <dl>
         <dt>Content</dt>
-        <dd><input type="text" name="content" value="" /></dd>
+        <dd>
+          <textarea name="content" cols="60" rows="10" value=""></textarea>
+        </dd>
       </dl>
       <div id="operations">
         <input type="submit" value="Create Page" />

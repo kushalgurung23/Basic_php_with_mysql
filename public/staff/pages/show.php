@@ -5,6 +5,7 @@
   $id = $_GET['id'] ?? 'no id fetched';
 
   $page = find_page_by_id($id);
+  
 
 ?>
 
@@ -25,6 +26,11 @@
       <dl>
         <dt>Menu Name</dt>
         <dd><?php echo hsc($page['menu_name']); ?></dd>
+      </dl>
+      <dl>
+        <dt>Subject Name</dt>
+        <?php $subect = find_subject_by_id($page['subject_id'])?>
+        <dd><?php echo hsc($subect['menu_name']); ?></dd>
       </dl>
       <dl>
         <dt>Position</dt>

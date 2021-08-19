@@ -24,7 +24,7 @@
     <table class="list">
       <tr>
         <th>ID</th>
-        <th>Subject ID</th>
+        <th>Subject</th>
         <th>Name</th>
         <th>Position</th>
         <th>Visible</th>
@@ -35,16 +35,17 @@
       </tr>
 
         <?php while($page = mysqli_fetch_assoc($pages_set)) { ?>
+          <?php $subject = find_subject_by_id($page['subject_id']);?>
             <tr>
               <td><?php echo hsc($page['id']);?></td>
-              <td><?php echo hsc($page['subject_id']);?></td>
+              <td><?php echo hsc($subject['menu_name']);?></td>
               <td><?php echo hsc($page['menu_name']);?></td>
               <td><?php echo hsc($page['position']);?></td>
               <td><?php echo $page['visible'] == 1 ? 'true' : 'false'; ?></td>
               <td><?php echo hsc($page['content']);?></td>
               <td><a class="action" href="<?php echo url_for('/staff/pages/show.php?id=' . hsc(u($page['id'])))?>">View</a></td>
               <td><a class="action" href="<?php echo url_for('/staff/pages/edit.php?id=' . hsc(u($page['id'])))?>">Edit</a></td>
-              <td><a class="action" href="">Delete</a></td>
+              <td><a class="action" href="<?php echo url_for('/staff/pages/delete.php?id=' . hsc(u($page['id']))); ?>">Delete</a></td>
             </tr>
           <?php } ?>
 
