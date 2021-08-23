@@ -20,14 +20,22 @@
     $page['content'] = $_POST['content'];
 
     $result = update_page($page);
-    redirect_to(url_for('/staff/pages/show.php?id=' . $page['id']));
+    if($result === true) {
+      redirect_to(url_for('/staff/pages/show.php?id=' . $page['id']));
+    }
+    else {
+      $errors = $result;
+      //var_dump($result);
+    }
+    
   }
   else {
     $page = find_page_by_id($id);
-    $page_set = find_all_pages();
-    $page_count = mysqli_num_rows($page_set);
-    mysqli_free_result($page_set);
   }
+
+  $page_set = find_all_pages();
+  $page_count = mysqli_num_rows($page_set);
+  mysqli_free_result($page_set);
 
 ?>
 
@@ -40,6 +48,8 @@
 
   <div class="Page edit">
     <h1>Edit Page</h1>
+
+    <?php echo display_errors($errors);?>
 
     <form action="<?php echo url_for('/staff/pages/edit.php?id=' . hsc(u($id))); ?>" method="post">
       <dl>

@@ -27,10 +27,47 @@
     return($subject);
   }
 
+  function validate_subject($subject) {
+
+    $errors = [];
+
+    if(is_blank($subject['menu_name'])) {
+      $errors[] = "Name cannot be empty.";
+    }
+    // if menu_name's length doesn't come within this limit,
+    elseif(!has_length($subject['menu_name'], ['min' => 2, 'max' => 255])) {
+      $errors[] = "Name must be of between 2 and 255 characters.";
+    }
+
+    // Position
+    // Type casting $subject['position'] to make sure, we are working with an integer.
+    $position_int = (int) $subject['position'];
+    if($position_int <=0) {
+      $errors[] = "Position must be greated than 0.";
+    }
+    if($position_int > 999) {
+      $errors[] = "Position must be less than 1000.";
+    }
+
+    //Visible
+    $visible_str = (string) $subject['visible'];
+    if(!has_inclusion_of($subject['visible'], ['0', '1'])) {
+      $errors[] = "Visible must be true or false.";    
+    }
+
+    return $errors;
+  }
+
   // $subject is single array or a whole array
   function insert_subject($subject) {
-
     global $db;
+
+    $errors = validate_subject($subject);
+    //If there is any error
+    if(!empty($errors)) {
+      return $errors;
+    }
+
     $sql = "INSERT INTO subjects ";
     $sql .= "(menu_name, position, visible) ";
     $sql .= "VALUES (";
@@ -55,22 +92,29 @@
   function update_subject($subject) {
     global $db;
 
+    $errors = validate_subject($subject);
+    if(!empty($errors)) {
+      return $errors;
+    }
+
     $sql = "UPDATE subjects SET ";
-    $sql .= "menu_name ='" . $subject['menu_name'] . "', ";
-    $sql .= "position ='" . $subject['position'] . "', ";
-    $sql .= "visible ='" . $subject['visible'] . "' ";
-    $sql .= "WHERE id = '" . $subject['id'] ."' ";
-    $sql .= "LIMIT 1;";
+    $sql .= "menu_name='" . $subject['menu_name'] . "', ";
+    $sql .= "position='" . $subject['position'] . "', ";
+    $sql .= "visible='" . $subject['visible'] . "' ";
+    $sql .= "WHERE id='" . $subject['id'] . "' ";
+    $sql .= "LIMIT 1";
 
     $result = mysqli_query($db, $sql);
+    // For UPDATE statements, $result is true/false
     if($result) {
       return true;
-    }
-    else {
+    } else {
+      // UPDATE failed
       echo mysqli_error($db);
-      mysqli_close($db);
+      db_disconnect($db);
       exit;
     }
+
   }
 
   function delete_subject($id) {
@@ -148,6 +192,11 @@
 
   function update_page($page) {
     global $db;
+
+    $errors = validate_page($page);
+    if(!empty($errors)) {
+      return $errors;
+    }
     $sql = "UPDATE pages SET ";
     $sql .= "menu_name = '" . $page['menu_name'] . "', "; 
     $sql .= "subject_id = '" . $page['subject_id'] ."', ";
@@ -184,6 +233,81 @@
       exit;
     }
 
+  }
+
+  function validate_page($page) {
+
+    $errors = [];
+
+    if(is_blank($page['menu_name'])) {
+      $errors[] = "Name cannot be empty";
+    }
+    elseif(!has_length($page['menu_name'], ['min' => 2, 'max' => 255])) {
+      $errors[] = "Name must be of between 2 and 255 characters.";
+    }
+
+    $subjectid_int = (int) $page['subject_id'];
+    if($subjectid_int <= 0) {
+      $errors[] = "Subject ID must be greater than 0.";
+    }
+
+    if($subjectid_int > 999) {
+      $errors[] = "Subject ID must be less than 1000.";
+    }    
+
+    $position_int = (int) $page['position'];
+    if($position_int <= 0) {
+      $errors[] = "Position must be greater than 0.";
+    }
+
+    if($position_int > 999) {
+      $errors[] = "Position must be less than 1000.";
+    }
+
+    $visible_str = (string) $page['visible'];
+    if(!has_inclusion_of($visible_str, ['0', '1'])) {
+      $errors[] = "Visible must be either true or false";    
+    }
+
+    if(is_blank($page['content'])) {
+      $errors[] = "Please enter content of the page";
+    }
+    elseif(!has_length($page['content'], ['min' => 2])) {
+      $errors[] = "Content must contain at least 2 characters.";
+    }
+
+    return $errors;
+  }
+
+  function validate_subjsect($subject) {
+
+    $errors = [];
+
+    if(is_blank($subject['menu_name'])) {
+      $errors[] = "Name cannot be empty.";
+    }
+    // if menu_name's length doesn't come within this limit,
+    elseif(!has_length($subject['menu_name'], ['min' => 2, 'max' => 255])) {
+      $errors[] = "Name must be of between 2 and 255 characters.";
+    }
+
+    // Position
+    // Type casting $subject['position'] to make sure, we are working with an integer.
+    $position_int = (int) $subject['position'];
+    if($position_int <=0) {
+      $errors[] = "Position must be greated than 0.";
+    }
+    if($position_int > 999) {
+      $errors[] = "Position must be less than 1000.";
+    }
+
+    //Visible
+    $visible_str = (string) $subject['visible'];
+    if(!has_inclusion_of($subject['visible'], ['0', '1'])) {
+      $errors[] = "Visible must be true or false.";    
+    }
+
+    return $errors;
   }
 
 ?>
