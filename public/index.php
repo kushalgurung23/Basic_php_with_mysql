@@ -1,14 +1,17 @@
-<!doctype html>
+<!-- working with file system.
+../ = goes one directory back.
+Here we aren't using constant because they are set in initialize.php which we haven't called yet.
+-->
+<?php require_once('../private/initialize.php'); ?>
 
-<html lang="en">
-  <head>
-    <title>Kushal Gurung Bank</title>
-    <meta charset="utf-8">
-  </head>
+<?php include(SHARED_PATH . '/public_header.php'); ?>
+<div id="main">
 
-  <body>
+  <div id = "page-menu">
+   
+  </div>
 
-  <h1>Kushal Bank: Coming soon</h1>
+</div>
 
-  </body>
-</html>
+<?php include(SHARED_PATH . '/public_footer.php'); ?>
+

@@ -2,6 +2,32 @@
 
 require_once('../../../private/initialize.php');
 
+if(is_post_request()) {
+
+  $page = [];
+
+  $page['menu_name'] = $_POST['menu_name'];
+  $page['subject_id'] = $_POST['subject_id'];
+  $page['position'] = $_POST['position'];
+  $page['visible'] = $_POST['visible'];
+  $page['content'] = $_POST['content'];
+
+  $page_result = insert_page($page);
+
+  if($page_result === true) {
+    $page_id = mysqli_insert_id($db);
+  redirect_to(url_for('/staff/pages/show.php?id=' . hsc(u($page_id))));
+  }
+  else {
+    $errors = $page_result;
+  }
+  
+}   
+
+else {
+  // Display empty create new page form.
+}
+
 $page_set = find_all_pages();
 $page_count = mysqli_num_rows($page_set) + 1;
 mysqli_free_result($page_set);
@@ -9,11 +35,6 @@ mysqli_free_result($page_set);
 $page = [];
 $page['subject_id'] = '';
 $page['position'] = $page_count;
-
-$subject_id_set = find_subject_id();
-$subject_id_count = mysqli_num_rows($subject_id_set);
-$all_subject_id = mysqli_fetch_assoc($subject_id_set);
-$keys = array_keys($all_subject_id);
 
 ?>
 
@@ -27,7 +48,9 @@ $keys = array_keys($all_subject_id);
   <div class="page new">
     <h1>Create Page</h1>
 
-    <form action="<?php echo url_for('/staff/pages/create.php')?>" method="post">
+    <?php echo display_errors($errors);?>
+
+    <form action="<?php echo url_for('/staff/pages/new.php')?>" method="post">
       <dl>
         <dt>Menu Name</dt>
         <dd><input type="text" name="menu_name" value="" /></dd>
