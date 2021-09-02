@@ -1,6 +1,8 @@
 <?php
   require_once('../../../private/initialize.php');
 
+  require_login();
+  
   if(isset($_GET['id'])) {
     $id = $_GET['id'];
   }
@@ -21,6 +23,7 @@
 
     $result = update_page($page);
     if($result === true) {
+      $_SESSION['message'] = 'Page was updated successfully.';
       redirect_to(url_for('/staff/pages/show.php?id=' . $page['id']));
     }
     else {
@@ -32,10 +35,8 @@
   else {
     $page = find_page_by_id($id);
   }
-
-  $page_set = find_all_pages();
-  $page_count = mysqli_num_rows($page_set);
-  mysqli_free_result($page_set);
+  
+  $page_count = count_pages_by_subject_id($page['subject_id']);
 
 ?>
 
@@ -44,7 +45,7 @@
 
 <div id="content">
 
-  <a class="back-link" href="<?php echo url_for('/staff/pages/index.php'); ?>">&laquo; Back</a>
+  <a class="back-link" href="<?php echo url_for('/staff/subjects/show.php?id=' . hsc(u($page['subject_id'])));?>">&laquo; Back</a>
 
   <div class="Page edit">
     <h1>Edit Page</h1>

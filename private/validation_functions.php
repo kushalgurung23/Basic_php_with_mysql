@@ -120,6 +120,19 @@
     mysqli_free_result($result_set);
 
     return $result_count === 0;
-  } 
+  }
+  
+  function has_unique_admin_username($username, $current_id="0") {
+    global $db;
+    $sql = "SELECT * FROM admins ";
+    $sql .= "WHERE username= '" . db_escape($db, $username) . "' ";
+    $sql .= "AND id != '" . db_escape($db, $current_id) . "';";
+    $query = mysqli_query($db, $sql);
+    $page_count = mysqli_num_rows($query);
+    mysqli_free_result($query);
+
+    return $page_count === 0;
+    
+  }
 
 ?>

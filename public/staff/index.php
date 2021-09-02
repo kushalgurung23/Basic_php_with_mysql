@@ -4,6 +4,8 @@ Here we aren't using constant because they are set in initialize.php which we ha
 -->
 <?php require_once('../../private/initialize.php'); ?>
 
+<?php require_login(); ?>
+
 <!-- Initializing or setting variable -->
 <?php $page_title = 'Staff Menu'; ?>
 
@@ -15,7 +17,7 @@ Here we aren't using constant because they are set in initialize.php which we ha
     <!-- We aren't using absolute path, we are using relative path so we aren't putting / at beginning -->
       <li><a href="<?php echo url_for('/staff/subjects/index.php');?>   ">Subjects</a></li>
       <li>
-        <a href="<?php echo url_for('/staff/pages/index.php');?>">Pages</a>
+        <a href="<?php echo url_for('/staff/admins/index.php');?>">Admins</a>
       </li>
     </ul>
   </div>

@@ -3,6 +3,8 @@
   // Starts output buffering 
   ob_start();
 
+  session_start();  // turn on session
+
   // File paths
   // defining constants
   // Assign file paths to PHP constants
@@ -31,7 +33,7 @@
   require_once('database.php');
   require_once('validation_functions.php');
   require_once('query_functions.php');
-  
+  require_once('auth_functions.php');
 
   $db = db_connect();
 

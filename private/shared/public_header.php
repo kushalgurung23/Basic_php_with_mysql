@@ -2,7 +2,7 @@
 
 <html lang="en">
   <head>
-    <title>Kushal Bank <?php if(isset($page_title)) { echo '- ' . hsc($page_title); } ?></title>
+    <title>Kushal Bank <?php if(isset($page_title)) { echo '- ' . hsc($page_title); } ?><?php if(isset($preview) && $preview) {echo '[PREVIEW]';}?></title>
     <meta charset="utf-8">
     <link rel="stylesheet" media="all" href="<?php echo url_for('/stylesheets/public.css'); ?>" />
   </head>

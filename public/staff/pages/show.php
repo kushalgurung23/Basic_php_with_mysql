@@ -2,12 +2,15 @@
 
   require_once('../../../private/initialize.php');
 
+  require_login();
+  
   $id = $_GET['id'] ?? 'no id fetched';
 
   $page = find_page_by_id($id);
-  
 
 ?>
+
+<?php $subject = find_subject_by_id($page['subject_id'])?>
 
 <?php $page_title="Page View" ?>
 
@@ -16,11 +19,16 @@
 ?>
 
 <div id="content">
-  <a class="back-link" href="<?php echo url_for('/staff/pages/index.php');?>">&laquo; Back</a>
+  <a class="back-link" href="<?php echo url_for('/staff/subjects/show.php?id=' . hsc(u($subject['id'])));?>">&laquo; Back</a>
 
   <div class="page show">
 
     <h1>Page: <?php echo hsc($page['menu_name']); ?></h1>
+
+    <!-- target="_blank" helps to open index.php in new tab -->
+    <div class = "actions">
+      <a class = "action" href="<?php echo url_for('/index.php?id=' . hsc(u($page['id'])) . '&preview=true'); ?>" target="_blank">Preview</a>
+    </div>
  
     <div class="attributes">
       <dl>
@@ -29,8 +37,7 @@
       </dl>
       <dl>
         <dt>Subject Name</dt>
-        <?php $subect = find_subject_by_id($page['subject_id'])?>
-        <dd><?php echo hsc($subect['menu_name']); ?></dd>
+        <dd><?php echo hsc($subject['menu_name']); ?></dd>
       </dl>
       <dl>
         <dt>Position</dt>

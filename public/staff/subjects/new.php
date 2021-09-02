@@ -2,6 +2,8 @@
 
 require_once('../../../private/initialize.php');
 
+require_login();
+
 $test = $_GET['test'] ?? '';
 // There should be no white text while modifying the header. Check through curl --head <url> in cmd.
 if($test == '404') {
@@ -23,7 +25,8 @@ if(is_post_request()) {
   $result = insert_subject($subject);
   if($result === true) {
     $new_id = mysqli_insert_id($db);
-  redirect_to(url_for('/staff/subjects/show.php?id=' . u($new_id)));
+    $_SESSION['message'] = 'Subject was created successfully.';
+    redirect_to(url_for('/staff/subjects/show.php?id=' . u($new_id)));
   } else {
     $errors = $result;
   }
