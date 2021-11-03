@@ -1,2 +1,2 @@
 # Basic_php_with_mysql
-## This repo was created while learning Basic PHP with MySQL course from LinkedIn Learning.
+## This repo was created while learning "PHP with MySQL Essential Training" course from LinkedIn Learning.
